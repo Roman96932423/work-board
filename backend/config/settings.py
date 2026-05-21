@@ -19,14 +19,21 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-INSTALLED_APPS = [
+GLOBAL_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
 ]
+
+LOCAL_APPS = [
+    'users',
+]
+
+INSTALLED_APPS = GLOBAL_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -91,6 +98,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
