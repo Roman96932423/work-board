@@ -9,7 +9,6 @@ class BoardSerializer(ModelSerializer):
         fields = ['id', 'title', 'description', 'owner', 'created_at']
         
         extra_kwargs = {
-            'id': {'read_only': True},
             'owner': {'read_only': True},
             'created_at': {'read_only': True}
         }

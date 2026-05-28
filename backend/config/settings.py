@@ -36,6 +36,7 @@ GLOBAL_APPS = [
 LOCAL_APPS = [
     'users',
     'boards',
+    'tasks'
 ]
 
 INSTALLED_APPS = GLOBAL_APPS + LOCAL_APPS
