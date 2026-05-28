@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import create_board, board_detail
+from .views import boards_list_create, board_detail_update
 
 
 urlpatterns = [
-	path('', create_board),
-	path('<int:board_id>/', board_detail)
+	path('', boards_list_create),
+	path('<int:board_id>/', board_detail_update),
 ]
