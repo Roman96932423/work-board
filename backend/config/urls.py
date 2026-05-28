@@ -18,5 +18,6 @@ urlpatterns = [
     path('api/test/', test_api),
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/refresh/', TokenRefreshView.as_view()),
-    path('api/users/', include('users.urls'))
+    path('api/users/', include('users.urls')),
+    path('api/boards/', include('boards.urls'))
 ]
