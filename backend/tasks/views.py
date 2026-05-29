@@ -9,9 +9,9 @@ from .models import Task
 from boards.models import Board
 
 
-@api_view(['GET', 'PATCH'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def task_detail_update(request, task_id):
+def task_detail_update_delete(request, task_id):
     task = get_object_or_404(Task, pk=task_id, board__owner=request.user)
     
     if request.method == 'GET':
@@ -30,6 +30,11 @@ def task_detail_update(request, task_id):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == 'DELETE':
+        task.delete()
+        
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'POST'])
