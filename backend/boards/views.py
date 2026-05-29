@@ -11,14 +11,14 @@ from .models import Board
 @api_view(['GET', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def board_detail_update_delete(request, board_id):
+    board = get_object_or_404(Board, pk=board_id, owner=request.user)
+    
     if request.method == 'GET':
-        board = get_object_or_404(Board, pk=board_id, owner=request.user)
         serializer = BoardSerializer(board)
         
         return Response(serializer.data)
     
     if request.method == 'PATCH':
-        board = get_object_or_404(Board, pk=board_id, owner=request.user)
         serializer = BoardSerializer(instance=board, data=request.data, partial=True)
         
         if serializer.is_valid():

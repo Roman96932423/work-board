@@ -9,13 +9,27 @@ from .models import Task
 from boards.models import Board
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])
-def task_detail(request, task_id):
+def task_detail_update(request, task_id):
     task = get_object_or_404(Task, pk=task_id, board__owner=request.user)
-    serializer = TaskSerializer(task)
     
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = TaskSerializer(task)
+        
+        return Response(serializer.data)
+    
+    if request.method == 'PATCH':
+        serializer = TaskSerializer(instance=task,
+                                    data=request.data,
+                                    partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'POST'])
