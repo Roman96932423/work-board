@@ -8,4 +8,4 @@ class TaskSerializer(ModelSerializer):
         model = Task
         fields = ['id', 'title', 'description', 'status', 'priority', 'board', 'owner', 'created_at', 'updated_at']
         
-        read_only_fields = ['owner', 'created_at', 'updated_at']
+        read_only_fields = ['board', 'owner', 'created_at', 'updated_at']

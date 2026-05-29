@@ -1,8 +1,8 @@
-from django.urls import path
+# from django.urls import path
 
-from .views import create_task
+# from .views import tasks_create_get
 
 
-urlpatterns = [
-	path('', create_task)
-]
+# urlpatterns = [
+# 	path('', tasks_create_get),
+# ]
