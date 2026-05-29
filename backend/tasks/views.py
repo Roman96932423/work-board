@@ -9,6 +9,15 @@ from .models import Task
 from boards.models import Board
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def task_detail(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, board__owner=request.user)
+    serializer = TaskSerializer(task)
+    
+    return Response(serializer.data)
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def tasks_create_get(request, board_id):

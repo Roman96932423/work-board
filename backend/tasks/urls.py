@@ -1,8 +1,8 @@
-# from django.urls import path
+from django.urls import path
 
-# from .views import tasks_create_get
+from .views import task_detail
 
 
-# urlpatterns = [
-# 	path('', tasks_create_get),
-# ]
+urlpatterns = [
+	path('<int:task_id>/', task_detail),
+]
