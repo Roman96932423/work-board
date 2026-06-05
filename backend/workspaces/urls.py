@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import workspace_list_create, workspace_detail
+from .views import workspace_list_create, workspace_detail_update
 
 
 urlpatterns = [
 	path('', workspace_list_create),
-	path('<int:ws_id>/', workspace_detail)
+	path('<int:ws_id>/', workspace_detail_update)
 ]

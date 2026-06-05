@@ -13,14 +13,27 @@ from .models import Workspace
     request=WorkspaceSerializer,
     responses=WorkspaceSerializer
 )
-@api_view(['GET'])
+@api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])
-def workspace_detail(request, ws_id):
-    workspace = get_object_or_404(Workspace, pk=ws_id, members=request.user)
-    serializer = WorkspaceSerializer(workspace)
+def workspace_detail_update(request, ws_id):
+    if request.method == 'GET':
+        workspace = get_object_or_404(Workspace, pk=ws_id, members=request.user)
+        serializer = WorkspaceSerializer(workspace)
+        
+        return Response(serializer.data)
     
-    return Response(serializer.data)
+    workspace = get_object_or_404(Workspace, pk=ws_id, owner=request.user)
     
+    if request.method == 'PATCH':
+        serializer = WorkspaceSerializer(instance=workspace, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
     
 @extend_schema(
     request=WorkspaceSerializer,
