@@ -13,9 +13,9 @@ from .models import Workspace
     request=WorkspaceSerializer,
     responses=WorkspaceSerializer
 )
-@api_view(['GET', 'PATCH'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def workspace_detail_update(request, ws_id):
+def workspace_detail_update_delete(request, ws_id):
     if request.method == 'GET':
         workspace = get_object_or_404(Workspace, pk=ws_id, members=request.user)
         serializer = WorkspaceSerializer(workspace)
@@ -33,6 +33,11 @@ def workspace_detail_update(request, ws_id):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == 'DELETE':
+        workspace.delete()
+        
+        return Response(status=status.HTTP_204_NO_CONTENT)
         
     
 @extend_schema(
